@@ -2,48 +2,36 @@ package com.training.kotlin
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val age = 5
         val name = "Bob"
-        val age = 10
+        val height = 1.60F
 
-        println("String template simple : $name a $age ans")
+        if (age < 5) {
+            println("$name n'est pas assez vieux pour du basket")
+        }
 
-        println("String template complexe : ${name.toUpperCase(Locale.FRENCH)} a ${age + 5} ans")
+        if (age >= 5 && height >= 1.50f) {
+            println("$name peut jouer au basket")
+        } else {
+            println("$name n'a ni l'âge, ni la taille requise pour jouer")
+        }
 
-        println(
-            "Concaténation classique :\n"
-                    + "Nom : " + name + "\n"
-                    + "Age : " + age + "\n"
-        )
+        if (name == "Bob") {
+            println("$name est un garçon")
+        } else if (name == "Bobette") {
+            println("$name est une fille")
+        } else {
+            println("On ne connait pas le sexe de $name")
+        }
 
-        println(
-            """Raw string :
-Nom : $name
-Age : $age
-"""
-        )
-
-        println(
-            """Raw string trim :
-        |Nom : $name
-        |Age : $age
-        """.trimMargin()
-        )
-
-        println(
-            """Raw string trim2 :
-        >Nom : $name
-        >Age : $age
-        >Et encore une nouvelle ligne !
-        """.trimMargin(">")
-        )
+        val type = if (age < 18) "child" else "adult"
+        println("${name} est un ${type}")
     }
 
 }
