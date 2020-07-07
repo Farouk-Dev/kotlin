@@ -3,43 +3,50 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
+fun isOldEnough(age: Int): Boolean {
+    return age >= 5
+}
+
+//fun isOldEnough(age: Int): Boolean = age >= 5
+
+fun describePeople(name: String, age: Int, height: Float) {
+    val canPlayString = when (isOldEnough(age)) {
+        true -> "peut jouer au basket-ball"
+        false -> "ne peut pas jouer au basket-ball"
+    }
+
+    println("${name} a ${age}, mesure ${height} et ${canPlayString}")
+}
+
+// we pass a default value for  the "detail" input
+fun describePeople(name: String, age: Int, height: Float, detail: String = "Aucun détail") {
+    val canPlayString = when (isOldEnough(age)) {
+        true -> "peut jouer au basket-ball"
+        false -> "ne peut pas jouer au basket-ball"
+    }
+
+    println("${name} a ${age}, mesure ${height} et ${canPlayString} (${detail})")
+}
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var name = "Bob"
+        var age = 10
+        var height = 1.6F
 
-        // Decare a mutable / immutable age
-        val minimumAge = 5
-        var age: Int = 10
+        describePeople(name, age, height)
 
-        // Display a property
-        var name: String? = "Bob"
-        println(name?.length)
-
-        if (name != null) { println(name.length) }
-
-        // Decalare a nullable String
-        var nullableName: String? = "Bob"
-        // nullableName = null
-
-        // Check for null in conditions
-        if (nullableName != null) {
-            // println(nullableName.length)
-        }
-
-        // Using the safe call operator "?."
-        // nullableName = null
-        val nameLength: Int? = nullableName?.length
-        println(nameLength)
-
-
-        // Using the non-null assert operator "!!"
-        nullableName = null
-        val notNullName: String = nullableName!!
-        val nameLengthForced: Int = nullableName!!.length
-        println(name!!.length)
-
+        name = "Bobette"
+        age = 3
+        height = 1.8F
+        describePeople(
+            name, age, height,
+            detail = "c'est une future championne"
+        )
     }
+
 
 }
