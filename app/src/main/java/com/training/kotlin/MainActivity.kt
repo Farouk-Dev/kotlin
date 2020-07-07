@@ -8,48 +8,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val age = 10
-        val name = "Bob"
 
-        when (age) {
-            is Byte -> println("est un Byte")
-            is Int -> println("est un Int")
-            is Float -> println("est un Float")
-            is Double -> println("est un Double")
+        // Decare a mutable / immutable age
+        val minimumAge = 5
+        var age: Int = 10
+
+        // Display a property
+        var name: String? = "Bob"
+        println(name?.length)
+
+        if (name != null) { println(name.length) }
+
+        // Decalare a nullable String
+        var nullableName: String? = "Bob"
+        // nullableName = null
+
+        // Check for null in conditions
+        if (nullableName != null) {
+            // println(nullableName.length)
         }
 
-        if (name == "Bob") {
-            println("$name est un garçon")
-        } else if (name == "Bobette") {
-            println("$name est une fille")
-        } else {
-            println("On ne connait pas le genre de $name")
-        }
+        // Using the safe call operator "?."
+        // nullableName = null
+        val nameLength: Int? = nullableName?.length
+        println(nameLength)
 
-        when (name) {
-            "Bob" -> println("$name est un garçon")
-            "Bobette" -> println("$name est une fille")
-            else -> println("On ne connait pas le sexe de $name")
-        }
 
-        when (age) {
-            in 1..5 -> println("$name est trop jeune")
-            in 6..10 -> println("$name peut jouer au basket")
-            !in 1..18 -> println("$name ne peut pas jouer avec les enfants")
-            else -> println("Condition non gérée")
-        }
+        // Using the non-null assert operator "!!"
+        nullableName = null
+        val notNullName: String = nullableName!!
+        val nameLengthForced: Int = nullableName!!.length
+        println(name!!.length)
 
-        val canPlayBasketBall = when (age) {
-            in 5..10 -> true
-            else -> false
-        }
-
-        //pattern matching
-        when {
-            age in 1..5 -> println("yyyyyyyyy")
-            name == "Bob" -> println("xxxxxxxxx")
-            else -> println("tttttttt")
-        }
     }
 
 }
