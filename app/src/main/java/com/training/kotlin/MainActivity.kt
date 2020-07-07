@@ -9,20 +9,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // from a constructor
-        val array = Array<Int>(10) { 0 }
-        val names: Array<String> = Array<String>(10) { "" }
-        names.set(0, "Bob")
-        println(names.get(0))
-        names[0] = "John"
-        println(names[0])
+        // for on a number range  + step
+        for (i in 1..5 step 2) {
+            println(i)
+        }
 
-        // from a factory function
-        val ages = arrayOf(4, 7, 15)
-        val indexAge = 2
-        println("Le 3eme élément est : ${ages[indexAge]}")
+        // for on a number range + step
+        for (i in 5 downTo 1 step 2) {
+            println(i)
+        }
 
-        ages[indexAge] = 29
-        println("Le 3eme élément est à pésent : ${ages[indexAge]}")
+        // define a list
+        val names: Array<String> = arrayOf("Bob", "Bobette", "Jane", "Mike")
+
+        // for loop
+        for (name in names) {
+            println(name)
+        }
+
+        // with index
+        for ((index, name) in names.withIndex()) {
+            println("${name} est à l'index ${index}")
+        }
+
+        // for + continue
+        for(name in names) {
+            if(name == "Jane") {
+                println("${name} est malade")
+                continue
+            }
+            println("${name} est présent")
+        }
     }
 }
