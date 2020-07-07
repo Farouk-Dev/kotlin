@@ -8,18 +8,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val age = 5
+        val age = 10
         val name = "Bob"
-        val height = 1.60F
 
-        if (age < 5) {
-            println("$name n'est pas assez vieux pour du basket")
-        }
-
-        if (age >= 5 && height >= 1.50f) {
-            println("$name peut jouer au basket")
-        } else {
-            println("$name n'a ni l'âge, ni la taille requise pour jouer")
+        when (age) {
+            is Byte -> println("est un Byte")
+            is Int -> println("est un Int")
+            is Float -> println("est un Float")
+            is Double -> println("est un Double")
         }
 
         if (name == "Bob") {
@@ -27,11 +23,33 @@ class MainActivity : AppCompatActivity() {
         } else if (name == "Bobette") {
             println("$name est une fille")
         } else {
-            println("On ne connait pas le sexe de $name")
+            println("On ne connait pas le genre de $name")
         }
 
-        val type = if (age < 18) "child" else "adult"
-        println("${name} est un ${type}")
+        when (name) {
+            "Bob" -> println("$name est un garçon")
+            "Bobette" -> println("$name est une fille")
+            else -> println("On ne connait pas le sexe de $name")
+        }
+
+        when (age) {
+            in 1..5 -> println("$name est trop jeune")
+            in 6..10 -> println("$name peut jouer au basket")
+            !in 1..18 -> println("$name ne peut pas jouer avec les enfants")
+            else -> println("Condition non gérée")
+        }
+
+        val canPlayBasketBall = when (age) {
+            in 5..10 -> true
+            else -> false
+        }
+
+        //pattern matching
+        when {
+            age in 1..5 -> println("yyyyyyyyy")
+            name == "Bob" -> println("xxxxxxxxx")
+            else -> println("tttttttt")
+        }
     }
 
 }
