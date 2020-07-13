@@ -7,19 +7,21 @@ open class Vehicle(val wheelCount: Int) {
     fun showWheels() {
         println("Le vehicule a ${this.wheelCount} roues")
     }
-
+     // methode ouverte à la surcharge
     open fun honk() {
         println("Pas de klaxon")
     }
 }
 
 class Car : Vehicle(4) {
+    // methode surchargée
     override fun honk() {
         println("Pouet!")
     }
 }
 
 class Motorcycle : Vehicle(2) {
+    // methode surchargée
     override fun honk() {
         println("Tsouin!")
     }
