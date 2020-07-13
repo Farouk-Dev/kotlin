@@ -1,34 +1,41 @@
 package com.training.kotlin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
-class User(
-    val name: String,
-    val age: Int,
-    val height: Float
-) {
-
-    val canPlayBasketball = age > 5 && height > 1.50f
-
-    init {
-        val basketString = when (canPlayBasketball) {
-            true -> "est dans l'équipe de basket-ball"
-            false -> "ne peut pas jouer au basket"
-        }
-        println("Info: ${name}, ${age} ans, ${basketString}")
+open class Vehicle(val wheelCount: Int) {
+    fun showWheels() {
+        println("Le vehicule a ${this.wheelCount} roues")
     }
 
-    constructor(name: String) : this(name, 5, 1.20f)
+    open fun honk() {
+        println("Pas de klaxon")
+    }
 }
 
+class Car : Vehicle(4) {
+    override fun honk() {
+        println("Pouet!")
+    }
+}
+
+class Motorcycle : Vehicle(2) {
+    override fun honk() {
+        println("Tsouin!")
+    }
+}
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bob = User("Bob", 10, 1.60f)
-        val bobette = User("Bobette")
+        var vehicle: Vehicle = Car()
+        vehicle.showWheels()
+        vehicle.honk()
+
+        vehicle = Motorcycle()
+        vehicle.showWheels()
+        vehicle.honk()
     }
 }
