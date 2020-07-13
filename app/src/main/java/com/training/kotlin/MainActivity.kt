@@ -3,29 +3,32 @@ package com.training.kotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class Car(val wheelsCount: Int = 4) {
+class User(
+    val name: String,
+    val age: Int,
+    val height: Float
+) {
 
-    fun honk() {
-        println("Pouet!")
-    }
+    val canPlayBasketball = age > 5 && height > 1.50f
 
-    fun honkForWheels() {
-        println("Honking for wheels")
-        for(i in 0..this.wheelsCount) {
-            honk()
+    init {
+        val basketString = when (canPlayBasketball) {
+            true -> "est dans l'équipe de basket-ball"
+            false -> "ne peut pas jouer au basket"
         }
+        println("Info: ${name}, ${age} ans, ${basketString}")
     }
+
+    constructor(name: String) : this(name, 5, 1.20f)
 }
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val car = Car()
-        println("Nombre de roues: ${car.wheelsCount}")
-
-        car.honk()
-        car.honkForWheels()
+        val bob = User("Bob", 10, 1.60f)
+        val bobette = User("Bobette")
     }
 }
