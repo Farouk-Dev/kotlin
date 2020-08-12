@@ -3,44 +3,36 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-open class Account {
-    protected var balance: Int = 0
+abstract class Vehicle(val wheelsCount: Int) {
 
-    open fun deposit(value: Int) {
-        balance += value
-        val prefix = if (value >= 0) "+" else ""
-        println("${prefix}${value} € sur le compte, nouveau solde : ${balance} €")
+    fun showWheels() {
+        println("Nombre de roues : ${wheelsCount}")
+    }
+
+    abstract fun honk()
+}
+class Car : Vehicle(4) {
+
+    override fun honk() {
+        println("Pouet!")
     }
 }
+class Motorcycle : Vehicle(2) {
 
-class PositiveAccount : Account() {
-
-    override fun deposit(value: Int) {
-        if (!isValidDeposit(value)) {
-            println("Opération négative interdite sur un PositiveAccount")
-            return
-        }
-        super.deposit(value)
-    }
-
-    private fun isValidDeposit(value: Int) : Boolean {
-        return balance + value >= 0
+    override fun honk() {
+        println("Tsouin!")
     }
 }
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        println("Compte normal")
-        val account = Account()
-        account.deposit(50)
+        var vehicle: Vehicle = Car()
+        vehicle.showWheels()
+        vehicle.honk()
 
-        println("Compte positif")
-        val positiveAccount = PositiveAccount()
-        positiveAccount.deposit(42)
-        positiveAccount.deposit(-100)
-        positiveAccount.deposit(-10)
+        vehicle = Motorcycle()
+        vehicle.showWheels()
+        vehicle.honk()
     }
 }
