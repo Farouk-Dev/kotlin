@@ -66,15 +66,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val car = Car()
-        car.displayGasGauge()
+        var v: Vehicle = Car()
 
-        car.fillGasTank()
-        car.displayGasGauge()
+        if (v is Vehicle) {
+            print("v est un Vehicle")
 
-        val moto = Motorcycle()
-        moto.fillGasTank()
-        moto.displayGasGauge()
-        moto.wheeling()
+            when (v) {
+                is Car -> println(" de type Car")
+                is Motorcycle -> println(" de type Motorcyle")
+                is Bicycle -> println(" de type Bicycle")
+            }
+        }
+
+        //v.wheeling()
+        if (v is Bicycle) {
+            v.wheeling()
+        } else {
+            println("v ne peux pas faire de figure")
+        }
+        (v as? Bicycle)?.wheeling()
+
+        val bike: Bicycle? = v as? Bicycle
+        bike?.wheeling()
     }
 }
