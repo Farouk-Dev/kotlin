@@ -3,17 +3,23 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class User(val name: String, val age: Int) {
-    lateinit var nickname: String
+abstract class Vehicle(val wheelsCount: Int) {
+
+    companion object Factory {
+        fun createCar() : Car = Car(4)
+        fun createMotorcycle() : Motorcycle = Motorcycle(2)
+    }
 }
+
+class Car(wheelsCount: Int) : Vehicle(wheelsCount)
+
+class Motorcycle(wheelsCount: Int) : Vehicle(wheelsCount)
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bob = User("Bob", 10)
-        bob.nickname = "MJ"
-        println("Surnom de ${bob.name} : ${bob.nickname}")
-
+        val car = Vehicle.createCar()
+        val motorcycle = Vehicle.Factory.createMotorcycle()
     }
 }
