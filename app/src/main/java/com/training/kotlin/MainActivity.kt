@@ -3,90 +3,29 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class Vehicle(val wheelsCount: Int) {
-    fun showWheels() {
-        println("Nombre de roues : ${wheelsCount}")
-    }
+data class User(val name: String, val age: Int) {
 
-    abstract fun honk()
-}
-
-interface Fuel {
-    var fuelGauge: Double
-
-    fun fillGasTank() {
-        println("Remplisssage du réservoir à essence...")
-        fuelGauge = 100.0
-    }
-
-    fun displayGasGauge() {
-        println("La jauge est à $fuelGauge %")
-    }
-}
-
-interface Trick {
-    fun wheeling()
-}
-
-class Car : Vehicle(4), Fuel {
-    override var fuelGauge: Double = 0.0
-
-    override fun honk() {
-        println("Pouet!")
-    }
-}
-
-class Motorcycle : Vehicle(2), Fuel, Trick {
-    override var fuelGauge: Double = 0.0
-
-    override fun honk() {
-        println("Tsouin!")
-    }
-
-    override fun wheeling() {
-        println("Roue arriere en moto !")
-    }
-
-    override fun fillGasTank() {
-        super.fillGasTank()
-        honk()
-    }
-}
-
-class Bicycle : Vehicle(2), Trick {
-    override fun wheeling() {
-        println("Roue arrière en vélo !")
-    }
-
-    override fun honk() {
-        println("Tut!")
+    override fun toString(): String {
+        return "name: ${name}, age: ${age}"
     }
 }
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var v: Vehicle = Car()
+        val bob = User("Bob", 10)
+        println("Infos sur Bob: ${bob}")
 
-        if (v is Vehicle) {
-            print("v est un Vehicle")
+        val bobette = User("Bobette", 4)
+        println("Infos sur Bobette: ${bobette}")
 
-            when (v) {
-                is Car -> println(" de type Car")
-                is Motorcycle -> println(" de type Motorcyle")
-                is Bicycle -> println(" de type Bicycle")
-            }
-        }
+        val john = bob.copy("John")
+        println("Infos sur John: ${john}")
 
-        //v.wheeling()
-        if (v is Bicycle) {
-            v.wheeling()
+        if (bob == john) {
+            println("Bob et John sont pareils")
         } else {
-            println("v ne peux pas faire de figure")
+            println("Bob et John sont différents")
         }
-        (v as? Bicycle)?.wheeling()
-
-        val bike: Bicycle? = v as? Bicycle
-        bike?.wheeling()
     }
 }
