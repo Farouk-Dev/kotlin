@@ -3,29 +3,30 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-data class User(val name: String, val age: Int) {
+class Bag(itemsCount : Int, name: String) {
 
-    override fun toString(): String {
-        return "name: ${name}, age: ${age}"
+    class Item(val weight: Int)
+    val items = arrayOfNulls<Item>(itemsCount)
+}
+
+class Car(val wheelsCount: Int) {
+
+    inner class Engine {
+        fun displayHorsepower() {
+            println("La voiture a ${wheelsCount * 34} chevaux")
+        }
     }
 }
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bob = User("Bob", 10)
-        println("Infos sur Bob: ${bob}")
 
-        val bobette = User("Bobette", 4)
-        println("Infos sur Bobette: ${bobette}")
+        val bag = Bag(2, "Bilbo")
+        bag.items[0] = Bag.Item(50)
+        bag.items[1] = Bag.Item(100)
 
-        val john = bob.copy("John")
-        println("Infos sur John: ${john}")
-
-        if (bob == john) {
-            println("Bob et John sont pareils")
-        } else {
-            println("Bob et John sont différents")
-        }
+        val car = Car(4)
+        car.Engine().displayHorsepower()
     }
 }
