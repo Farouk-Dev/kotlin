@@ -3,30 +3,54 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class Bag(itemsCount : Int, name: String) {
-
-    class Item(val weight: Int)
-    val items = arrayOfNulls<Item>(itemsCount)
+fun <T> printArray(array: Array<T>) {
+    var separator = ""
+    val sb = StringBuilder()
+    for (i in array.indices) {
+        sb.append(separator)
+        sb.append(array[i])
+        separator = ", "
+    }
+    println(sb.toString())
 }
 
-class Car(val wheelsCount: Int) {
+class Box<T : Number>(var value: T) {
 
-    inner class Engine {
-        fun displayHorsepower() {
-            println("La voiture a ${wheelsCount * 34} chevaux")
-        }
+    fun set(newValue: T) {
+        value = newValue
+    }
+
+    fun get(): T {
+        return value
     }
 }
+
+// ADD LAST to demonstrate extensibility
+data class User(val name: String, val age: Int)
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bag = Bag(2, "Bilbo")
-        bag.items[0] = Bag.Item(50)
-        bag.items[1] = Bag.Item(100)
+        val integers = arrayOf(1, 2, 3, 4)
+        val strings = arrayOf("Hello", "World", "en", "Kotlin")
 
-        val car = Car(4)
-        car.Engine().displayHorsepower()
+        // ADD LAST to demonstrate extensibility
+        val users = arrayOf(User("Bob", 10), User("Bobette", 4))
+
+        println("fonction générique")
+        printArray(integers)
+        printArray(strings)
+        printArray(users)
+
+        println("Classe générique")
+        val boxInt = Box<Int>(2)
+        val v: Int = boxInt.get()
+        println("Box content: ${v}")
+
+        val boxString = Box<String>("Kotlin")
+        println("Box content: ${boxString.get()}")
+        boxString.set("Rocks")
+        println("Box content: ${boxString.get()}")
     }
 }
