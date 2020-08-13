@@ -9,34 +9,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val numbers = mutableListOf<Int>(1, 2, 3)
-        numbers.add(42)
-        numbers.add(8)
+        val uniqueNames = mutableSetOf("Bob", "Bobette")
+        println(uniqueNames)
 
-        // immutable list is a view of a mutable list
-        val roNumbers: List<Int> = numbers
-//        roNumbers.removeAt(0) // forbidden, immutable list
-        println(roNumbers)
+        // Bob will not be added (duplicate)
+        uniqueNames.add("John")
+        uniqueNames.add("Jane")
+        uniqueNames.add("Bob")
+        println(uniqueNames)
 
-        // using a lambda to filter a list
-        val evenNumbers = numbers.filter { it % 2 == 0 }
-        println(evenNumbers)
+        println("Bob est présent ? ${uniqueNames.contains("Bob")}")
 
-        val names = listOf("Bob", null, "Bobette", null, "Mike")
-        println(names)
+        // create a read only view of the MutableSet
+        val namesView: Set<String> = uniqueNames
+        println("Liste des noms en foreach")
+        for (name in namesView) {
+            println(name)
+        }
+        println("élément à l'indice 0: ${namesView.elementAt(0)}")
 
-        // chain operations
-        val longNames = names.filterNotNull()
-            .filter { it.length > 3 }
-            .map { it.toUpperCase() }
-        println(longNames)
-
-        // use filterNotNull() to simplify operations
-        val containsLetterM = names
-            .take(3)
-            .filterNotNull()
-            .any { it.toLowerCase().contains("m") }
-        println("Au moins 1 nom contient la lettre m? $containsLetterM")
-
+        // filter still works, returns a List rather than a Set
+        val list: List<String> = namesView
+            .filter { it.startsWith("J") }
+            .sorted()
+        println("Set filtré par la lettre J: $list")
     }
 }
