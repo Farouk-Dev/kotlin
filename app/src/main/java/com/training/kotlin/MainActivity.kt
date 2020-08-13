@@ -1,37 +1,56 @@
 package com.training.kotlin
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import java.util.*
 
-fun filterInts(numbers: Array<Int>, param: (Int) -> Boolean): Array<Int> {
-    val filteredNumbers = mutableListOf<Int>()
-    for (n in numbers) {
-        if (param(n)) {
-            filteredNumbers.add(n)
-        }
+// Unit type == void
+fun arrayAction(array: Array<Int>, action: (Int) -> Unit) {
+    for (a in array) {
+        action(a)
     }
-    return filteredNumbers.toTypedArray()
 }
-
-fun positiveInt(n: Int): Boolean = n > 0
-fun evenInt(n: Int): Boolean = n % 2 == 0
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val numbers = arrayOf(-99, -42, -6, -5, 0, 18, 87, 119)
-        val positiveNumbers = filterInts(numbers, ::positiveInt)
-        println("Nombres positifs : ${Arrays.toString(positiveNumbers)}")
 
-        val evenNumbers = filterInts(numbers, ::evenInt)
-        println("Nombres pairs : ${Arrays.toString(evenNumbers)}")
+        // lambda : normal call
+        numbers.filter({ number -> number > 0 })
 
-        val positiveEvenNumbers = filterInts(
-            filterInts(numbers, ::positiveInt),
-            ::evenInt
-        )
-        println("Nombres positifs & pairs : ${Arrays.toString(positiveEvenNumbers)}")
+        // lambda: implicit name of a single parameter
+        numbers.filter({it > 0})
+
+        // lambda: declare outside the parentheses
+        numbers.filter{ it % 2 == 0 }
+
+        // lambda: equivalent of numbers.forEach { }
+        arrayAction(numbers) { number ->
+            println(number)
+        }
+
+        // lambda: underscore for unused variables
+        numbers.forEachIndexed { _, number -> println(number)  }
+
+        // lambda: simplify existing SAM (Single Abstract Method)
+        val button = Button(this)
+        button.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(p0: View?) {
+                println("Click!")
+            }
+        })
+
+        // replace with lambda
+        button.setOnClickListener({ view -> println("click") })
+
+        // remove argument if not needed
+        button.setOnClickListener({ println("click") })
+
+        // remove parentheses if not needed
+        button.setOnClickListener{ println("click") }
     }
 }
