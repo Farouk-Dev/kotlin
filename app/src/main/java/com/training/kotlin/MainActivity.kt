@@ -3,31 +3,20 @@ package com.training.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-fun validateName(name: String) {
-    require(name.isNotEmpty()) { "Empty name" }
-    for (character in name) {
-        require(character.isLetter()) { "Invalid name, non letter character=$character" }
-    }
-}
-
-fun sendGift(user: User) {
-    require(user.email.isNotEmpty()) { "Empty email" }
-    check(user.state == User.State.ACTIVE) { "Invalid user state: ${user.state}" }
-
-    println("Sending gift to $user")
-}
-
-data class User(val name: String, val email: String) {
-    enum class State {
-        NEW,
-        ACTIVE
+class User(var name: String?, var email: String?) {
+    fun updateName(name: String?) {
+        this.name = name ?: "N/A"
     }
 
-    init {
-        validateName(name)
+    fun updateEmail(email: String?) {
+        this.email = email ?: throw IllegalArgumentException("Invalid email")
     }
 
-    var state: State = State.NEW
+    fun getInfoLength(): Int {
+        val nameLength = name?.length ?: return 0
+        val emailLength = email?.length ?: return 0
+        return nameLength + emailLength
+    }
 }
 
 class MainActivity : AppCompatActivity() {
@@ -36,14 +25,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        validateName("Bob") // validate will be ok
-        validateName("B0b3tt3") // validate will raise IllegalArgumentException
+        val name: String? = "Bob"
 
-        val bobette = User("Bobette", "bobette@kotlin.training")
-        bobette.state = User.State.ACTIVE
-        sendGift(bobette)
+        // if / else syntax
+        // val size = if (name != null) name.length else 0
 
-        val bob = User("Bob", "bob@kotlin.training")
-        sendGift(bob) // bob is in state NEW, IllegalStateException
+        // elvis operator syntax
+        val size = name?.length ?: 0
+        println(size)
+
+        val bob = User("Bob", null)
+//        bob.updateName(null)
+        println(bob.name)
+
+//        bob.updateEmail(null)
+        bob.updateEmail("bob@kotlin.training")
+        println("info length: ${bob.getInfoLength()}")
     }
 }
