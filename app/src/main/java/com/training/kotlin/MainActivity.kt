@@ -9,29 +9,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val uniqueNames = mutableSetOf("Bob", "Bobette")
-        println(uniqueNames)
+        // declaration of a mutable map
+        val languages = mutableMapOf(
+            "Kotlin" to "Un super langage",
+            "Java" to "Un langage qui a fait son temps")
 
-        // Bob will not be added (duplicate)
-        uniqueNames.add("John")
-        uniqueNames.add("Jane")
-        uniqueNames.add("Bob")
-        println(uniqueNames)
+        languages.put("C++", "Une des origines du Java")
+        println(languages)
 
-        println("Bob est présent ? ${uniqueNames.contains("Bob")}")
+        println("Valeur de la clé Kotlin: ${languages["Kotlin"]}")
 
-        // create a read only view of the MutableSet
-        val namesView: Set<String> = uniqueNames
-        println("Liste des noms en foreach")
-        for (name in namesView) {
-            println(name)
+        if (!languages.contains("Python")) {
+            println("Il manque le Python!")
         }
-        println("élément à l'indice 0: ${namesView.elementAt(0)}")
 
-        // filter still works, returns a List rather than a Set
-        val list: List<String> = namesView
-            .filter { it.startsWith("J") }
-            .sorted()
-        println("Set filtré par la lettre J: $list")
+        println("foreach sur les Entry")
+        for (entry in languages.entries) {
+            println("${entry.key} => ${entry.value}")
+        }
+
+        println("foreach multi-declaration")
+        for ((key, value) in languages) {
+            println("$key => $value")
+        }
+
+        println("foreach sur les clés")
+        for (language in languages.keys) {
+            println("$language")
+        }
+
+        val nonCppLanguages = languages
+            .filterNot { it.key == "C++" }
+            .mapValues { it.value.toUpperCase() }
+        println(nonCppLanguages)
     }
 }
