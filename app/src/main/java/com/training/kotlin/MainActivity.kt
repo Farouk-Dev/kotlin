@@ -1,56 +1,40 @@
 package com.training.kotlin
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
-// Unit type == void
-fun arrayAction(array: Array<Int>, action: (Int) -> Unit) {
-    for (a in array) {
-        action(a)
+class DivideException(message: String, cause: Exception) : Exception(message, cause)
+
+fun divide(numerator: Int?, denominator: Int?): Int {
+
+    try {
+        return numerator!! / denominator!!
+    } catch (e: ArithmeticException) {
+        throw DivideException("Division par 0 interdite", e)
+    } catch (e: NullPointerException) {
+        throw DivideException("Opérande null", e)
     }
 }
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val numbers = arrayOf(-99, -42, -6, -5, 0, 18, 87, 119)
+        val numerator: Int? = null
+        val denominator = 0
 
-        // lambda : normal call
-        numbers.filter({ number -> number > 0 })
+        try {
+            println("Début de l'opération...")
+            divide(numerator, denominator)
+            println("Opération effectuée avec succès!")
+        } catch (e: DivideException) {
+            println("${e.message}, cause: ${e.cause}")
+        } finally {
 
-        // lambda: implicit name of a single parameter
-        numbers.filter({it > 0})
-
-        // lambda: declare outside the parentheses
-        numbers.filter{ it % 2 == 0 }
-
-        // lambda: equivalent of numbers.forEach { }
-        arrayAction(numbers) { number ->
-            println(number)
+            // finally block is always reached
+            println("Fin de l'opération")
         }
-
-        // lambda: underscore for unused variables
-        numbers.forEachIndexed { _, number -> println(number)  }
-
-        // lambda: simplify existing SAM (Single Abstract Method)
-        val button = Button(this)
-        button.setOnClickListener(object: View.OnClickListener {
-            override fun onClick(p0: View?) {
-                println("Click!")
-            }
-        })
-
-        // replace with lambda
-        button.setOnClickListener({ view -> println("click") })
-
-        // remove argument if not needed
-        button.setOnClickListener({ println("click") })
-
-        // remove parentheses if not needed
-        button.setOnClickListener{ println("click") }
     }
 }
