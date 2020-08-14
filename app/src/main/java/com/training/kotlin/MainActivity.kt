@@ -1,7 +1,5 @@
 package com.training.kotlin
 
-import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -11,15 +9,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val paint = Paint()
-        paint.alpha = 100
-        paint.color = Color.RED
-        paint.strokeWidth = 2.0f
+        val sb = StringBuilder()
+        sb.append("Hello! ")
+        sb.append("Kotlin")
 
-        with(paint) {
-            alpha = 100
-            color = Color.BLUE
-            strokeWidth = 1.0f
+        val sentence = sb.toString()
+        println("$sentence")
+       // run combine let+with
+        val shorter = StringBuilder().run {
+            append("Hello! ")
+            append("Run rocks")
+            toString()
         }
+        println("$shorter")
     }
 }
